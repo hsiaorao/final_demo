@@ -3,7 +3,7 @@ PImage girlJumpInv, girlFlyInv, girlSlipInv, girlWalk1Inv, girlWalk2Inv;
 PImage girlEgg, ghostEgg, girlHurt;
 PImage gameStart, gameStartH, gameOver, gameOverH, hp, gameIntro, lion;
 float cameraSpeed, moveDistance=0;
-//float speedup, currentCS;
+float currentCS;
 String depthString;
 String score, currentScore;
 int delayTimer=120, hpX;
@@ -233,9 +233,11 @@ void draw() {
     }
 
     // cameraSpeed
-    for (int i=0; i<20; i++) {
-      if ((moveDistance/50)>=100+i*200) {
-        cameraSpeed=INITIAL_SPEED+(i+1)*0.5;
+    if (!player.isDie) {
+      for (int i=0; i<20; i++) {
+        if ((moveDistance/50)>=100+i*200) {
+          cameraSpeed=INITIAL_SPEED+(i+1)*0.5;
+        }
       }
     }
     //player
