@@ -29,10 +29,12 @@ final float divideObject = 2.5;
 int mummyCount=0;
 int objectRandom;
 int highscore=0;
+int objectNew, nowScore;
 final int INITIAL_OBJECT_X = 800;
 final int RENEW_OBJECT_X = 2400;
 final int NEXT_OBJECT = 600;
 final int INITIAL_SPEED = 7;
+final int addObject = 50;
 
 import ddf.minim.*;
 Minim minim;
@@ -111,7 +113,7 @@ void initGame() {
 
   //initialize object
   for (int i=0; i<object.length; i++) {
-    objectRandom = (objectRandom +floor(random(1, 9)))%9;
+    objectRandom = floor(random(1, 4));
     switch(objectRandom) {      
       //item      
     case 0:
@@ -119,23 +121,24 @@ void initGame() {
       object[i].isTorch = true;
       break;        
     case 1:
-      object[i] = new Potion(INITIAL_OBJECT_X + i*NEXT_OBJECT, height-330);
-      break;
+      object[i] = new Thorn(INITIAL_OBJECT_X + i*NEXT_OBJECT, height-110);
+      break;  
+      //enemy in the air   
 
-      //enemy in the air      
+
     case 2:
-      object[i] = new Spider(INITIAL_OBJECT_X + i*NEXT_OBJECT, height-300);
-      break;     
-    case 3:
       object[i] = new Bat(INITIAL_OBJECT_X + i*NEXT_OBJECT, height-random(240, 360));
       break;
 
-      //enemy on the ground            
-    case 4:
-      object[i] = new Thorn(INITIAL_OBJECT_X + i*NEXT_OBJECT, height-110);
-      break;     
-    case 5:
+      //enemy on the ground         
+    case 3:
       object[i] = new Brick(INITIAL_OBJECT_X + i*NEXT_OBJECT, height-140);
+      break;
+    case 4:
+      object[i] = new Spider(INITIAL_OBJECT_X + i*NEXT_OBJECT, height-300);
+      break;    
+    case 5:
+      object[i] = new Potion(INITIAL_OBJECT_X + i*NEXT_OBJECT, height-330);
       break;
     case 6:
       object[i] = new MummyCat(INITIAL_OBJECT_X + i*NEXT_OBJECT, height-140);
@@ -214,6 +217,8 @@ void draw() {
     objectCanHit(objectCanHit);
 
     //Object
+    nowScore = floor(moveDistance/50);
+    objectNew = min(nowScore/addObject+4, 9);
     for (int i=0; i<object.length; i++) {
       object[i].move(cameraSpeed);
       object[i].display();
@@ -223,16 +228,16 @@ void draw() {
       if (object[i].reset()) {
         //if (object[i].isMummy())
         //  mummyCount=0;
-        object[i] = renew();
+        object[i] = renew(objectNew);
       }
     }
 
     // cameraSpeed
-  for(int i=0; i<20; i++){
-    if ((moveDistance/50)>=100+i*200) {
-      cameraSpeed=INITIAL_SPEED+(i+1)*0.5;
+    for (int i=0; i<20; i++) {
+      if ((moveDistance/50)>=100+i*200) {
+        cameraSpeed=INITIAL_SPEED+(i+1)*0.5;
+      }
     }
-  }
     //player
     player.update();
     if (player.isFly) {
@@ -337,11 +342,11 @@ void objectCanHit(boolean objectCanHit) {
   }
 }
 
-Object renew() {
+Object renew(int objectNew) {
   Object object;
-  int objectRandom = floor(random(0, 9));
-  if (objectRandom==7 && mummyCount==1)
-    objectRandom = (objectRandom + floor(random(1, 9)))%9;
+  int objectRandom = floor(random(0, objectNew));
+  //if (objectRandom==7 && mummyCount==1)
+  //objectRandom = (objectRandom + floor(random(1, 9)))%9;
   switch(objectRandom) {
     //item    
   case 0:
@@ -349,24 +354,24 @@ Object renew() {
     object.isTorch = true;
     return object;
   case 1:
-    object = new Potion(RENEW_OBJECT_X+NEXT_OBJECT, height-330);
+    object = new Thorn(RENEW_OBJECT_X+NEXT_OBJECT, height-110);
     return object;
 
     //enemy in the air  
   case 2:
-    object = new Spider(RENEW_OBJECT_X+NEXT_OBJECT, height-300);
-    return object;
-  case 3:
     object = new Bat(RENEW_OBJECT_X+NEXT_OBJECT, height-random(240, 360));
     return object;
 
-    //enemy on the ground      
+    //enemy on the ground   
+  case 3:
+    object = new Brick(RENEW_OBJECT_X+NEXT_OBJECT, height-140);
+    return object; 
   case 4:
-    object = new Thorn(RENEW_OBJECT_X+NEXT_OBJECT, height-110);
+    object = new Spider(RENEW_OBJECT_X+NEXT_OBJECT, height-300);
     return object;
   case 5:
-    object = new Brick(RENEW_OBJECT_X+NEXT_OBJECT, height-140);
-    return object;    
+    object = new Potion(RENEW_OBJECT_X+NEXT_OBJECT, height-330);
+    return object; 
   case 6:
     object = new MummyCat(RENEW_OBJECT_X+NEXT_OBJECT, -540);
     return object;    
@@ -402,7 +407,7 @@ void keyPressed() {
     }
   } else if (key == 's') {
     gameState = GAME_RUN;
-  } 
+  }
 }
 
 void keyReleased() {
