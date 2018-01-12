@@ -233,9 +233,11 @@ void draw() {
     }
 
     // cameraSpeed
-    for (int i=0; i<20; i++) {
-      if ((moveDistance/50)>=100+i*200) {
-        cameraSpeed=INITIAL_SPEED+(i+1)*0.5;
+    if (!player.isDie) {
+      for (int i=0; i<20; i++) {
+        if ((moveDistance/50)>=100+i*200) {
+          cameraSpeed=INITIAL_SPEED+(i+1)*0.5;
+        }
       }
     }
     //player
