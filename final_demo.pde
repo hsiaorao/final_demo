@@ -161,10 +161,11 @@ void draw() {
 
   case GAME_START: // Start Screen
     image(gameStart, 0, 0);
-    if (mouseX > 320  && mouseX < 480 && mouseY > 350  && mouseY < 410) {
-      if (mousePressed) {
+    if (mouseX > 320  && mouseX < 480 && mouseY > 350  && mouseY < 410 || keyPressed) {
+      if (mousePressed || keyPressed) {
         gameState =  GAME_INTRO;
         mousePressed = false;
+        keyPressed = false;
         openingSong.pause();
         playingSong.play();
         playingSong.loop();
@@ -226,6 +227,12 @@ void draw() {
       }
     }
 
+    // cameraSpeed
+  for(int i=0; i<20; i++){
+    if ((moveDistance/50)>=100+i*200) {
+      cameraSpeed=INITIAL_SPEED+(i+1)*0.5;
+    }
+  }
     //player
     player.update();
     if (player.isFly) {
@@ -270,7 +277,6 @@ void draw() {
     fill(255, 0, 0);
     text(depthString, width-10, 50);
 
-
     if (player.isDie == true) {
       delayTimer--;
       if (delayTimer==119) {
@@ -289,10 +295,11 @@ void draw() {
     image(gameOver, 0, 0);
     if (highscore < (floor(moveDistance/50)))
       highscore=(floor(moveDistance/50));
-    if (mouseX > 325  && mouseX < 480 && mouseY > 360  && mouseY < 430) {
-      if (mousePressed) {
+    if (mouseX > 325  && mouseX < 480 && mouseY > 360  && mouseY < 430 || keyPressed) {
+      if (mousePressed  || keyPressed) {
         gameState = GAME_RUN;
         mousePressed = false;
+        keyPressed = false;
         initGame();
         openingSong.pause();
         playingSong.play();
@@ -395,7 +402,7 @@ void keyPressed() {
     }
   } else if (key == 's') {
     gameState = GAME_RUN;
-  }
+  } 
 }
 
 void keyReleased() {
