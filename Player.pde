@@ -96,6 +96,7 @@ class Player {
     w = 120;
     h = 120;
     if (isFly) {
+      currentCS = cameraSpeed;
       player.stay = false;
       switch(flyState) {
 
@@ -111,7 +112,7 @@ class Player {
 
       case flying:
         objectCanHit = false;
-        cameraSpeed = 15;
+        cameraSpeed = currentCS + 8;
         flyTimer--;
         t += 0.14;
         y = a*sin(t)+100;
@@ -122,7 +123,7 @@ class Player {
 
       case downtoRun:
         objectCanHit = false;
-        cameraSpeed = INITIAL_SPEED;
+         cameraSpeed = currentCS;
         if (y < PLAYER_INIT_Y) {
           y += 6;
         } else {

@@ -3,7 +3,7 @@ PImage girlJumpInv, girlFlyInv, girlSlipInv, girlWalk1Inv, girlWalk2Inv;
 PImage girlEgg, ghostEgg, girlHurt;
 PImage gameStart, gameStartH, gameOver, gameOverH, hp, gameIntro, lion;
 float cameraSpeed, moveDistance=0;
-//float speedup, currentCS;
+float currentCS;
 String depthString;
 String score, currentScore;
 int delayTimer=120, hpX;
@@ -34,7 +34,7 @@ final int INITIAL_OBJECT_X = 800;
 final int RENEW_OBJECT_X = 2400;
 final int NEXT_OBJECT = 600;
 final int INITIAL_SPEED = 7;
-final int addObject = 50;
+final int addObject = 100;
 
 import ddf.minim.*;
 Minim minim;
@@ -43,7 +43,7 @@ AudioSample eatPotionSound, openBoxSound, dieSound, flySound, meowSound, mummySo
 AudioSample eggSound, enemyHitSound;
 
 void setup() {
-  size(800, 450, P3D);
+  size(800, 450, P2D);
 
   //load Image
   ghost= loadImage("img/ghost.png");
@@ -166,9 +166,12 @@ void draw() {
     image(gameStart, 0, 0);
     if (mouseX > 320  && mouseX < 480 && mouseY > 350  && mouseY < 410 || keyPressed) {
       if (mousePressed || keyPressed) {
-        gameState =  GAME_INTRO;
+        if (keyPressed) {
+          image(gameStartH, 0, 0);
+        }
         mousePressed = false;
-        keyPressed = false;
+        keyPressed = false;                  
+        gameState =  GAME_INTRO;      
         openingSong.pause();
         playingSong.play();
         playingSong.loop();
@@ -190,13 +193,20 @@ void draw() {
 
     //intro word
     tint(255, fade);
-    image(gameIntro, -220, -30, 1040, 585);
+    image(gameIntro, -210, -60, 1040, 565);
     if (introTimer>0 && introTimer<100) {
       fade-=5;
       if (fade<0) fade=0;
     }
     tint(255);
-    if (introTimer<=0) gameState=GAME_RUN;
+    if (introTimer<=0) {
+      gameState=GAME_RUN;
+    }
+    if (keyPressed && key == ' ') {
+      gameState=GAME_RUN;
+      keyPressed = false;
+    }
+
     break;
 
   case GAME_RUN:
@@ -233,11 +243,14 @@ void draw() {
     }
 
     // cameraSpeed
-    for (int i=0; i<20; i++) {
-      if ((moveDistance/50)>=100+i*200) {
-        cameraSpeed=INITIAL_SPEED+(i+1)*0.5;
+    if (!player.isDie) {
+      for (int i=0; i<20; i++) {
+        if ((moveDistance/50)>=100+i*200) {
+          cameraSpeed=INITIAL_SPEED+(i+1)*0.5;
+        }
       }
     }
+
     //player
     player.update();
     if (player.isFly) {
@@ -264,7 +277,6 @@ void draw() {
       egg.display();
       egg.checkCollision(player);
     }
-
 
     // m Count UI
     depthString = "Best :" + highscore +" m ";
@@ -302,6 +314,9 @@ void draw() {
       highscore=(floor(moveDistance/50));
     if (mouseX > 325  && mouseX < 480 && mouseY > 360  && mouseY < 430 || keyPressed) {
       if (mousePressed  || keyPressed) {
+        if (keyPressed) {
+          image(gameOverH, 0, 0);
+        }
         gameState = GAME_RUN;
         mousePressed = false;
         keyPressed = false;
@@ -323,6 +338,7 @@ void draw() {
     break;
   }
 }
+
 
 void objectCanHit(boolean objectCanHit) {
   //if (player.isFly) {
@@ -405,8 +421,6 @@ void keyPressed() {
       slipState  = true;
       break;
     }
-  } else if (key == 's') {
-    gameState = GAME_RUN;
   }
 }
 
