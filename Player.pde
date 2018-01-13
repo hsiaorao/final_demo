@@ -96,7 +96,7 @@ class Player {
     w = 120;
     h = 120;
     if (isFly) {
-      currentCS = cameraSpeed;
+      //currentCS = cameraSpeed;
       player.stay = false;
       switch(flyState) {
 

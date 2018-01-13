@@ -250,7 +250,8 @@ void draw() {
         }
       }
     }
-
+      currentCS = cameraSpeed;
+      
     //player
     player.update();
     if (player.isFly) {
