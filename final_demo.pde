@@ -34,7 +34,7 @@ final int INITIAL_OBJECT_X = 800;
 final int RENEW_OBJECT_X = 2400;
 final int NEXT_OBJECT = 600;
 final int INITIAL_SPEED = 7;
-final int addObject = 100;
+final int addObject = 75;
 
 import ddf.minim.*;
 Minim minim;
@@ -144,10 +144,10 @@ void initGame() {
       object[i] = new MummyCat(INITIAL_OBJECT_X + i*NEXT_OBJECT, height-140);
       break;    
     case 7:
-      object[i] = new Mummy(INITIAL_OBJECT_X + i*NEXT_OBJECT, height-170);
+      object[i] = new Box(INITIAL_OBJECT_X + i*NEXT_OBJECT, height-160);
       break;
     case 8:
-      object[i] = new Box(INITIAL_OBJECT_X + i*NEXT_OBJECT, height-160);
+      object[i] = new Mummy(INITIAL_OBJECT_X + i*NEXT_OBJECT, height-170);
       break;
     }
   }
@@ -392,10 +392,10 @@ Object renew(int objectNew) {
     object = new MummyCat(RENEW_OBJECT_X+NEXT_OBJECT, -540);
     return object;    
   case 7:
-    object = new Mummy(RENEW_OBJECT_X+NEXT_OBJECT, height-170);
+    object = new Box(RENEW_OBJECT_X+NEXT_OBJECT, height-160);
     return object;
   case 8:
-    object = new Box(RENEW_OBJECT_X+NEXT_OBJECT, height-160);
+    object = new Mummy(RENEW_OBJECT_X+NEXT_OBJECT, height-170);
     return object;
   }
   return null;
