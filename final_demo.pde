@@ -34,7 +34,7 @@ final int INITIAL_OBJECT_X = 800;
 final int RENEW_OBJECT_X = 2400;
 final int NEXT_OBJECT = 600;
 final int INITIAL_SPEED = 7;
-final int addObject = 100;
+final int addObject = 75;
 
 import ddf.minim.*;
 Minim minim;
