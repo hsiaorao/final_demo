@@ -51,8 +51,7 @@ class Mummy extends Enemy {
       if (x == 800-currentCS*12) {
         mummySound.trigger();
       }
-    }
-    if (x == 800-currentCS*10) {
+    } else if (x == 800-currentCS*10) {
       mummySound.trigger();
     }
   }
