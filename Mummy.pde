@@ -47,7 +47,11 @@ class Mummy extends Enemy {
   }
 
   void playsound() {
-    if (x == 800-currentCS*10){
+    if (moveDistance/50 < 600) {
+      x = 800-currentCS*12;
+      mummySound.trigger();
+    } else if (moveDistance/50 > 800) {
+      x= 800-currentCS*10;
       mummySound.trigger();
     }
   }
