@@ -43,7 +43,7 @@ class MummyCat extends Enemy {
   }
 
   void playsound() {
-    if (y == -540 +(ySpeed+(currentCS - INITIAL_SPEED)/2)*50) {
+    if (y == -540 +(ySpeed+(currentCS - INITIAL_SPEED)/2)*45) {
       meowSound.trigger();
     }
   }
