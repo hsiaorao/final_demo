@@ -250,8 +250,8 @@ void draw() {
         }
       }
     }
-      currentCS = cameraSpeed;
-      
+    currentCS = cameraSpeed;
+
     //player
     player.update();
     if (player.isFly) {
@@ -361,7 +361,7 @@ void objectCanHit(boolean objectCanHit) {
 
 Object renew(int objectNew) {
   Object object;
-  int objectRandom = floor(random(0, objectNew));
+  int objectRandom =floor(random(0, objectNew));
   //if (objectRandom==7 && mummyCount==1)
   //objectRandom = (objectRandom + floor(random(1, 9)))%9;
   switch(objectRandom) {
