@@ -2,6 +2,7 @@ class MummyCat extends Enemy {
   PImage mummyCat1, mummyCat2;
   float ySpeed=8;
   float timer;
+  boolean mummyCatTrigger=true;
 
   MummyCat(float x, float y) {
     super();
@@ -43,8 +44,11 @@ class MummyCat extends Enemy {
   }
 
   void playsound() {
-    if (y == -540 +(ySpeed+(currentCS - INITIAL_SPEED)/2)*45) {
-      meowSound.trigger();
+    if (mummyCatTrigger) {
+      if (dist(x, y, player.x, player.y) < height+300) {
+        meowSound.trigger();
+        mummyCatTrigger=false;
+      }
     }
   }
 }

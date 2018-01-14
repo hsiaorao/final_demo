@@ -3,6 +3,7 @@ class Mummy extends Enemy {
   float timer;
   Stone stone;
   PImage mummy1, mummy2;
+  boolean mummyTrigger=true;
 
   Mummy(float x, float y) {
     super();
@@ -47,9 +48,11 @@ class Mummy extends Enemy {
   }
 
   void playsound() {
-    if (x == 750) {
-      mummySound.trigger();
+    if (mummyTrigger) {
+      if (x <= 750) {
+        mummySound.trigger();
+        mummyTrigger=false;
+      }
     }
-    //println(x);
   }
 }
