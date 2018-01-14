@@ -18,7 +18,7 @@ class Spider extends Enemy {
     super.move(speed);
     //detect the distance
     if (dist(x, y, player.x, player.y) < 240) {
-   y += (ySpeed + (currentCS - INITIAL_SPEED)/2);
+      y += (ySpeed + (currentCS - INITIAL_SPEED)/2);
       if (y >=280 || y <= 50) {
         ySpeed *= -1;
       }
@@ -33,7 +33,7 @@ class Spider extends Enemy {
   }    
 
   void playsound() {
-    if (y == height-300+ySpeed) {
+    if (y == height-300+ ySpeed + (currentCS - INITIAL_SPEED)/2) {
       spiderSound.trigger();
     }
   }

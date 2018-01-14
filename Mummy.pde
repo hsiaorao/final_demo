@@ -47,7 +47,7 @@ class Mummy extends Enemy {
   }
 
   void playsound() {
-    if (x == 750) {
+    if (x == 800-currentCS*10){
       mummySound.trigger();
     }
   }
